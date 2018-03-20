@@ -1,0 +1,21 @@
+{
+  "name": "client-side-app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "flexlayout-react": "^0.2.5",
+    "material-ui": "^0.20.0",
+    "react": "^16.2.0",
+    "react-bootstrap": "^0.32.1",
+    "react-bootstrap-tabs": "^1.0.2",
+    "react-dom": "^16.2.0",
+    "react-scripts": "1.1.1",
+    "react-twitter-auth": "0.0.11"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
