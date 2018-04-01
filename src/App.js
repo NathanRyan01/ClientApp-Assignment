@@ -9,7 +9,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {value: '', post: '', user: '', pUser: [], pScore :[], pTweet: [], 
-      nUser: [], nScore :[], nTweet: [], cUser: [], cScore :[], cTweet: []};
+      nUser: [], nScore :[], nTweet: [], cUser: [], cScore :[], cTweet: [], query: [], trend: [], tweet: [] };
 
     this.searchUser = this.searchUser.bind(this);
     this.submitTweet = this.submitTweet.bind(this);
@@ -19,6 +19,7 @@ class App extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.refresh = this.refresh.bind(this);
+    this.storeHistory = this.storeHistory.bind(this);
     this.logout = this.logout.bind(this);
   }
 
@@ -57,6 +58,33 @@ class App extends React.Component {
     this.handleSubmit(event,type);
   }
 
+  storeHistory(value, category){
+    if(category === '/search'){
+      if(this.state.trend.length >= 5){
+        this.state.trend.shift();
+      }
+      this.setState({      
+        trend : this.state.trend.concat(value),
+      })
+    }
+    else if(category === '/post'){
+      if(this.state.tweet.length >= 5){
+        this.state.tweet.shift();
+      }
+      this.setState({      
+        tweet : this.state.tweet.concat(value),
+      })
+    }
+    else{
+      if(this.state.query.length >= 5){
+        this.state.query.shift();
+      }
+      this.setState({      
+        query : this.state.query.concat(value),
+      })
+    }
+  }
+
   handleSubmit(event,type) {
     this.setState({
       pUser: [], pScore :[], pTweet: [], nUser: [], nScore :[], 
@@ -76,6 +104,7 @@ class App extends React.Component {
       console.log(request, response);
     });
     var input = type === '/post'?  this.state.post : type === '/userPost' ? this.state.user: this.state.value;
+    this.storeHistory(input, type);
     client.post(type,{
       json: {
         data: input,
@@ -211,7 +240,48 @@ class App extends React.Component {
                 </Tab>
                 </Tabs>         
             </div>
-            
+            <div>
+            <Tabs activeKey={this.state.key} >
+              <Tab eventKey={0} label="Trends" title="Tab 3">
+              <div>
+                <table>                  
+                  
+                  <tr>
+                  <th>Recently Searched</th>
+                  {this.state.trend.map((trend, index) => (
+                          <td>{trend}</td>
+                  ))}
+                  </tr>                 
+                </table>
+                
+                </div>
+                </Tab>
+              <Tab eventKey={1} label="Query" title="Tab 4">
+              <div>
+                <table>
+                <tr>
+                  <th>Recently Searched</th>
+                      {this.state.query.map((query, index) => (
+                              <td>{query}</td>
+                      ))}               
+                  </tr>
+                </table>
+                </div>
+                </Tab>
+                <Tab eventKey={2} label="Tweets" title="Tab 5">
+              <div>
+                <table>
+                <tr>
+                  <th>Recently Searched</th>
+                      {this.state.tweet.map((tweet, index) => (
+                              <td>{tweet}</td>
+                      ))}
+                  </tr>
+                </table>
+                </div>
+                </Tab>
+                </Tabs>         
+                </div>         
             <div>
         <form onSubmit={this.postTweet}>
         <label>
