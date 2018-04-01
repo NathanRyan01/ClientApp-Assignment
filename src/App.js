@@ -24,7 +24,7 @@ class App extends React.Component {
   }
 
   handlePost(event){
-    this.setState({post: event.target.post});
+    this.setState({post: this.refs.post.value});
   }
 
   logout() {
@@ -105,7 +105,7 @@ class App extends React.Component {
       <form onSubmit={this.submitTweet}>
         <label>
           Name:
-          <input type="text" value={this.state.value} onChange={this.handleChange} />
+          <input type="text" placeholder = 'Please enter your query' value={this.state.value} onChange={this.handleChange} />
         </label>
         <input type="submit" value="Submit" />
       </form>
@@ -192,9 +192,8 @@ class App extends React.Component {
         <form onSubmit={this.postTweet}>
         <label>
           Enter Twitter Post:
+          <textarea type="text" ref="post" placeholder = 'Please enter your post' value={this.state.post} onChange={this.handlePost} />
         </label>
-        <textarea value={this.state.post} onChange={this.handlePost} />
-
         <input type="submit" value="Submit" />
        </form>
             <button  style={style} onClick = {this.logout}>Logout</button>
