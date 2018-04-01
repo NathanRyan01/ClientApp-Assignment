@@ -8,14 +8,17 @@ import FetchHttpClient, { json } from 'fetch-http-client';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {value: '', post: '', pUser: [], pScore :[], pTweet: [], 
+    this.state = {value: '', post: '', user: '', pUser: [], pScore :[], pTweet: [], 
       nUser: [], nScore :[], nTweet: [], cUser: [], cScore :[], cTweet: []};
 
+    this.searchUser = this.searchUser.bind(this);
     this.submitTweet = this.submitTweet.bind(this);
     this.postTweet = this.postTweet.bind(this);
     this.handlePost = this.handlePost.bind(this);
+    this.handleUser = this.handleUser.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.refresh = this.refresh.bind(this);
     this.logout = this.logout.bind(this);
   }
 
@@ -23,8 +26,16 @@ class App extends React.Component {
     this.setState({value: event.target.value});
   }
 
+  handleUser(event) {
+    this.setState({user: event.target.value});
+  }
+
   handlePost(event){
     this.setState({post: this.refs.post.value});
+  }
+
+  refresh(){
+    this.setState({post: '', user: '', value: ''});
   }
 
   logout() {
@@ -32,12 +43,17 @@ class App extends React.Component {
   }
 
   submitTweet(event){
-    var type = '/search'
+    var type = '/search';
     this.handleSubmit(event,type);
   }
 
   postTweet(event){
-    var type = '/post'
+    var type = '/post';
+    this.handleSubmit(event,type);
+  }
+
+  searchUser(event){
+    var type = '/userPost';
     this.handleSubmit(event,type);
   }
 
@@ -59,7 +75,7 @@ class App extends React.Component {
     client.addMiddleware(request => response => {
       console.log(request, response);
     });
-    var input = (type === '/post') ? this.state.post : this.state.value;
+    var input = type === '/post'?  this.state.post : type === '/userPost' ? this.state.user: this.state.value;
     client.post(type,{
       json: {
         data: input,
@@ -73,39 +89,47 @@ class App extends React.Component {
     var data= [];
     var test = [];
     data = res.jsonData;
-    for (var i in data){
-      test = data[i].split("+");
-      if(test[0]==='positive'){
-        this.setState({
-          pUser : this.state.pUser.concat([test[1]]),
-          pTweet: this.state.pTweet.concat([test[2]]),
-          pScore: this.state.pScore.concat([test[3]]),
-        })
-      }
-      else if(test[0]==='negative'){
-        this.setState({
-          nUser : this.state.nUser.concat([test[1]]),
-          nTweet: this.state.nTweet.concat([test[2]]),
-          nScore: this.state.nScore.concat([test[3]]),
-        })
-      }
-      else if(test[0]==='celebrity'){
-        this.setState({      
-          cUser : this.state.cUser.concat([test[1]]),
-          cTweet: this.state.cTweet.concat([test[2]]),
-          cScore: this.state.cScore.concat([test[3]]),
-        })
-      }
-    }  
+        for (var i in data){
+          test = data[i].split("+");
+          if(test[0]==='positive'){
+            this.setState({
+              pUser : this.state.pUser.concat([test[1]]),
+              pTweet: this.state.pTweet.concat([test[2]]),
+              pScore: this.state.pScore.concat([test[3]]),
+            })
+          }
+          else if(test[0]==='negative'){
+            this.setState({
+              nUser : this.state.nUser.concat([test[1]]),
+              nTweet: this.state.nTweet.concat([test[2]]),
+              nScore: this.state.nScore.concat([test[3]]),
+            })
+          }
+          else if(test[0]==='celebrity'){
+            this.setState({      
+              cUser : this.state.cUser.concat([test[1]]),
+              cTweet: this.state.cTweet.concat([test[2]]),
+              cScore: this.state.cScore.concat([test[3]]),
+            })
+          }
+        }
+        this.refresh();
   }
-
   render() {
     return (
       <div>
       <form onSubmit={this.submitTweet}>
         <label>
-          Name:
+          Query
           <input type="text" placeholder = 'Please enter your query' value={this.state.value} onChange={this.handleChange} />
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
+
+      <form onSubmit={this.searchUser}>
+        <label>
+          User:
+          <input type="text" placeholder = 'Enter the user' value={this.state.user} onChange={this.handleUser} />
         </label>
         <input type="submit" value="Submit" />
       </form>
