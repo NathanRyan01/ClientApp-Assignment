@@ -3,13 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "ajv": "^6.0.0",
+    "cors": "^2.8.4",
+    "fetch-http-client": "^1.1.0",
     "flexlayout-react": "^0.2.5",
     "material-ui": "^0.20.0",
-    "react": "^16.2.0",
+    "react": "^15.6.1",
     "react-bootstrap": "^0.32.1",
     "react-bootstrap-tabs": "^1.0.2",
-    "react-dom": "^16.2.0",
+    "react-dom": "^15.6.1",
     "react-scripts": "1.1.1",
+    "react-simpletabs": "^0.7.0",
+    "react-table": "^6.8.0",
     "react-twitter-auth": "0.0.11"
   },
   "scripts": {

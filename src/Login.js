@@ -3,7 +3,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-import { Card, CardText } from 'material-ui/Card';
+import FetchHttpClient, { json } from 'fetch-http-client';
+
 
 class Login extends React.Component {
 constructor(props){
@@ -15,8 +16,10 @@ constructor(props){
  }
 
  login() {
-     this.props.history.push("/App");
-  }
+  const client = new FetchHttpClient('http://localhost:3001/twitter/');
+  client.get('login').then(response =>console.log);     
+}
+
 render() {
     return (
       <div>
@@ -24,23 +27,9 @@ render() {
           <div>
           <AppBar
               titleStyle={{textAlign: "center"}}
-               title="Login"
-               
+               title="Home Page"             
            />         
-           <TextField
-             hintText="Enter your Username"
-             floatingLabelText="Username"
-             onChange = {(event,newValue) => this.setState({username:newValue})}
-             />
-           <br/>
-             <TextField
-               type="password"
-               hintText="Enter your Password"
-               floatingLabelText="Password"
-               onChange = {(event,newValue) => this.setState({password:newValue})}
-               />
-             <br/>
-             <RaisedButton label="Submit" primary={true} style={style} onClick={this.login}/>
+             <RaisedButton label="Go To Twitter" primary={true} style={style} onClick={this.login}/>
          </div>
          </MuiThemeProvider>
       </div>
