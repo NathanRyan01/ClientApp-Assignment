@@ -8,14 +8,17 @@
     "fetch-http-client": "^1.1.0",
     "flexlayout-react": "^0.2.5",
     "material-ui": "^0.20.0",
-    "react": "^15.6.1",
+    "react": "^16.0.0",
     "react-bootstrap": "^0.32.1",
+    "react-bootstrap-form": "^0.1.4-beta6",
     "react-bootstrap-tabs": "^1.0.2",
     "react-dom": "^15.6.1",
     "react-scripts": "1.1.1",
     "react-simpletabs": "^0.7.0",
     "react-table": "^6.8.0",
-    "react-twitter-auth": "0.0.11"
+    "react-tabs": "^2.2.1",
+    "react-twitter-auth": "0.0.11",
+    "reactstrap": "^5.0.0"
   },
   "scripts": {
     "start": "react-scripts start",

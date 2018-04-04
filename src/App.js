@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
-import {Tabs, Tab} from 'react-bootstrap-tabs';
+import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
 import logo from './logo.svg';
-import ReactTable from 'react-table'
+import ReactTable from 'react-table';
+import 'react-tabs/style/react-tabs.css';
+import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap'
 import './App.css';
+import AppBar from 'material-ui/AppBar';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import FetchHttpClient, { json } from 'fetch-http-client';
 
 class App extends React.Component {
@@ -147,26 +151,90 @@ class App extends React.Component {
   render() {
     return (
       <div>
+           <MuiThemeProvider>
+          <div>
+          <AppBar
+              titleStyle={{textAlign: "center"}}
+               title="Middleware Application"             
+           />         
+         </div>
+         </MuiThemeProvider>  
+         <div>
       <form onSubmit={this.submitTweet}>
         <label>
-          Query
+          Query: 
           <input type="text" placeholder = 'Please enter your query' value={this.state.value} onChange={this.handleChange} />
         </label>
-        <input type="submit" value="Submit" />
+        <input type="submit" value="Enter" />
       </form>
-
+      </div>
+      <div>
       <form onSubmit={this.searchUser}>
         <label>
           User:
-          <input type="text" placeholder = 'Enter the user' value={this.state.user} onChange={this.handleUser} />
+          <input type="text" placeholder = 'Enter the user: ' value={this.state.user} onChange={this.handleUser} />
         </label>
-        <input type="submit" value="Submit" />
+        <input type="submit" value="Enter" />
       </form>
-            <div>
-            <Tabs activeKey={this.state.key} >
-              <Tab eventKey={0} label="Positive" title="Tab 0">
-              <div>
-                <table>                  
+      </div>
+      <div>
+      <form onSubmit={this.postTweet}>
+        <label>
+          Enter Twitter Post:
+          <textarea maxlength="280" type="text" ref="post" placeholder = 'Please enter your post' value={this.state.post} onChange={this.handlePost} />
+        </label>
+        <input type="submit" value="Post" />
+       </form>
+      </div>
+        <div>
+         <Tabs>
+          <TabList>
+            <Tab>Recent Trends</Tab>
+            <Tab>Recent Queries</Tab>
+            <Tab>Recent Trends</Tab>
+          </TabList>
+          <TabPanel>
+                <table>                                
+                  <tr>
+                  <th>Recently Trends</th>
+                      {this.state.trend.map((trend, index) => (
+                              <td>{trend}</td>
+                      ))}
+                  </tr>                 
+                </table>
+          </TabPanel>
+          <TabPanel>
+          <table>
+                <tr>
+                  <th>Recent Queries</th>
+                      {this.state.query.map((query, index) => (
+                              <td>{query}</td>
+                      ))}               
+                  </tr>
+                </table>
+          </TabPanel>
+          <TabPanel>
+          <table>
+                <tr>
+                  <th>Recent Tweets</th>
+                      {this.state.tweet.map((tweet, index) => (
+                              <td>{tweet}</td>
+                      ))}
+                  </tr>
+                </table>
+          </TabPanel>
+        </Tabs>
+        
+           </div>
+         <div>
+         <Tabs>
+          <TabList>
+            <Tab>Positive</Tab>
+            <Tab>Negative</Tab>
+            <Tab>Celebrity</Tab>
+          </TabList>
+          <TabPanel>
+          <table>                  
                   <tr>
                   <th>User</th>
                   {this.state.pUser.map((pUser, index) => (
@@ -184,15 +252,11 @@ class App extends React.Component {
                   {this.state.pTweet.map((pTweet, index) => (
                           <td>{pTweet}</td>
                   ))}
-                  </tr>
-                  
+                  </tr>                 
                 </table>
-                
-                </div>
-                </Tab>
-              <Tab eventKey={1} label="Negative" title="Tab 1">
-              <div>
-                <table>
+          </TabPanel>
+          <TabPanel>
+          <table>
                 <tr>
                   <th>User</th>
                       {this.state.nUser.map((nUser, index) => (
@@ -212,11 +276,9 @@ class App extends React.Component {
                       ))}
                   </tr>
                 </table>
-                </div>
-                </Tab>
-                <Tab eventKey={2} label="Celebrity" title="Tab 2">
-              <div>
-                <table>
+          </TabPanel>
+          <TabPanel>
+          <table>
                 <tr>
                   <th>User</th>
                       {this.state.cUser.map((cUser, index) => (
@@ -236,62 +298,12 @@ class App extends React.Component {
                       ))}
                   </tr>
                 </table>
-                </div>
-                </Tab>
-                </Tabs>         
-            </div>
-            <div>
-            <Tabs activeKey={this.state.key} >
-              <Tab eventKey={0} label="Trends" title="Tab 3">
-              <div>
-                <table>                  
-                  
-                  <tr>
-                  <th>Recently Searched</th>
-                  {this.state.trend.map((trend, index) => (
-                          <td>{trend}</td>
-                  ))}
-                  </tr>                 
-                </table>
-                
-                </div>
-                </Tab>
-              <Tab eventKey={1} label="Query" title="Tab 4">
-              <div>
-                <table>
-                <tr>
-                  <th>Recently Searched</th>
-                      {this.state.query.map((query, index) => (
-                              <td>{query}</td>
-                      ))}               
-                  </tr>
-                </table>
-                </div>
-                </Tab>
-                <Tab eventKey={2} label="Tweets" title="Tab 5">
-              <div>
-                <table>
-                <tr>
-                  <th>Recently Searched</th>
-                      {this.state.tweet.map((tweet, index) => (
-                              <td>{tweet}</td>
-                      ))}
-                  </tr>
-                </table>
-                </div>
-                </Tab>
-                </Tabs>         
-                </div>         
-            <div>
-        <form onSubmit={this.postTweet}>
-        <label>
-          Enter Twitter Post:
-          <textarea type="text" ref="post" placeholder = 'Please enter your post' value={this.state.post} onChange={this.handlePost} />
-        </label>
-        <input type="submit" value="Submit" />
-       </form>
-            <button  style={style} onClick = {this.logout}>Logout</button>
-         </div>
+          </TabPanel>
+        </Tabs>
+        </div>
+        <div>    
+      <button  style={style} onClick = {this.logout}>Logout</button>
+   </div>
        </div>
     );
   }
@@ -300,5 +312,6 @@ class App extends React.Component {
 const style = {
   margin: 15
  };
+ 
 
 export default App;
