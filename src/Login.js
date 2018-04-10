@@ -26,13 +26,10 @@ render() {
           <div>
           <AppBar
               titleStyle={{textAlign: "center"}}
-               title="Home Page"             
-           />         
-             <RaisedButton buttonStyle={{ borderRadius: 100, width:145,height:45}}
-                                          style={{ borderRadius: 100,width:145,height:45 }}
-                                          labelColor={'#FFFFFF'}
-                                          backgroundColor={"#0066e8"}
-
+               title="Middleware Application"             
+           />    
+                  
+             <RaisedButton style={style}
               label="Go To Twitter" primary={true} onClick={this.login}/>
          </div>
          </MuiThemeProvider>
@@ -41,7 +38,13 @@ render() {
   }
 }
 const style = {
- margin: 15
+    margin: 15,
+    borderRadius: 100,  
+    width:145,
+    height:45,
+    labelColor:'#FFFFFF',
+    backgroundColor: "#0066e8",
+    textAlign: "center"
 };
 
 

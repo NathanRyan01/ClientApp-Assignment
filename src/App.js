@@ -221,7 +221,7 @@ class App extends React.Component {
           <TabPanel>
           <table>
                 <tr>
-                  <th>Recent Tweets</th>
+                  <th>Recent Posts</th>
                       {this.state.tweet.map((tweet, index) => (
                               <td>{tweet}</td>
                       ))}
