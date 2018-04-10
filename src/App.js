@@ -1,9 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
-import logo from './logo.svg';
-import ReactTable from 'react-table';
 import 'react-tabs/style/react-tabs.css';
-import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap'
 import './App.css';
 import AppBar from 'material-ui/AppBar';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -122,6 +119,7 @@ class App extends React.Component {
     var data= [];
     var test = [];
     data = res.jsonData;
+    if(data.length < 1){
         for (var i in data){
           test = data[i].split("+");
           if(test[0]==='positive'){
@@ -147,6 +145,13 @@ class App extends React.Component {
           }
         }
         this.refresh();
+      }
+      else{
+        this.setState({
+          value: '', post: '',user: ''
+        });
+        alert("Your action returned no results, please try again.");
+      }
   }
   render() {
     return (
@@ -181,7 +186,7 @@ class App extends React.Component {
       <form onSubmit={this.postTweet}>
         <label>
           Enter Twitter Post:
-          <textarea maxlength="280" type="text" ref="post" placeholder = 'Please enter your post' value={this.state.post} onChange={this.handlePost} />
+          <textarea maxLength="280" type="text" ref="post" placeholder = 'Please enter your post' value={this.state.post} onChange={this.handlePost} />
         </label>
         <input type="submit" value="Post" />
        </form>
@@ -300,10 +305,8 @@ class App extends React.Component {
                 </table>
           </TabPanel>
         </Tabs>
-        </div>
-        <div>    
+        </div>   
       <button  style={style} onClick = {this.logout}>Logout</button>
-   </div>
        </div>
     );
   }

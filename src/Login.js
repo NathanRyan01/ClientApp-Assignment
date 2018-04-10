@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
-import FetchHttpClient, { json } from 'fetch-http-client';
+import FetchHttpClient from 'fetch-http-client';
 
 
 class Login extends React.Component {
@@ -29,7 +28,12 @@ render() {
               titleStyle={{textAlign: "center"}}
                title="Home Page"             
            />         
-             <RaisedButton label="Go To Twitter" primary={true} style={style} onClick={this.login}/>
+             <RaisedButton buttonStyle={{ borderRadius: 100, width:145,height:45}}
+                                          style={{ borderRadius: 100,width:145,height:45 }}
+                                          labelColor={'#FFFFFF'}
+                                          backgroundColor={"#0066e8"}
+
+              label="Go To Twitter" primary={true} onClick={this.login}/>
          </div>
          </MuiThemeProvider>
       </div>
